@@ -6,15 +6,27 @@
       "source_ami": "ami-7b6cb610",
       "instance_type": "t2.micro",
       "ssh_username": "ubuntu",
-      "ami_name": "VCL Packer {{timestamp}}",
+      "ami_name": "VCL Base {{timestamp}}",
       "tags": {
         "OS_Version": "Ubuntu",
         "Release": "Vivid 15.04",
-        "VNC_Screen_Share": "yes"
+        "VNC_Shared": "yes"
       }
     }
   ],
   "provisioners": [
-
+    {
+    "type": "shell",
+    "inline": [
+      "sudo apt-get update",
+      "sudo apt-get install -y ansible"]
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "ansible/site.yml",
+      "playbook_dir": "ansible",
+      "inventory_groups": "vcl",
+      "inventory_file": "/Users/dcic/Dropbox/UMD-DCIC/Amazon/hosts"
+    }
   ]
 }
