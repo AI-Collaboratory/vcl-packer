@@ -1,0 +1,9 @@
+---
+- hosts: test
+  remote_user: ubuntu
+  sudo: yes
+  gather_facts: yes
+
+  roles:
+  - common
+  - vnc

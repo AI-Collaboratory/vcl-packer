@@ -1,0 +1,12 @@
+---
+- name: Install the Ubuntu Desktop Package
+  apt: pkg={{ item }} state=installed update_cache=true
+  with_items:
+    - ubuntu-desktop
+    - gnome-core
+
+- name: Upgrade all packages
+  apt: upgrade=dist update_cache=true
+
+- name: Create DCIC User
+  user: name=dcic password={{ dcic_password_crypt }} comment="DCIC VCL User"

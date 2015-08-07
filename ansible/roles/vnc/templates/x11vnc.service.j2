@@ -1,0 +1,10 @@
+[Unit]
+Description=Start x11vnc at startup.
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/x11vnc -env FD_XDM=1 -auth guess -forever -loop -noxrecord -noxdamage -rfbauth /etc/dcic_x11vnc_passwd -rfbport 5900 -shared
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,32 @@
+---
+- name: Install the VNC Package
+  apt: pkg={{ item }} state=installed update_cache=true
+  with_items:
+    - x11vnc
+
+- name: Drop Gnome required encryption for remote access
+  shell: gsettings set org.gnome.Vino require-encryption false
+  sudo: yes
+
+- name: Copy the X11VNC service file
+  template: src=x11vnc.service.j2 dest=/lib/systemd/system/x11vnc.service
+
+- file: path=/home/dcic/.vnc state=directory mode=0755 owner=dcic
+- name: Copy the X startup file
+  template: src=xstartup.j2 dest=/home/dcic/.vnc/xstartup owner=dcic
+
+- name: Store the VNC password
+  shell: x11vnc -storepasswd {{ dcic_password }} /etc/dcic_x11vnc_passwd
+  sudo: yes
+
+- name: Add the new service to systemd daemon
+  shell: systemctl daemon-reload
+  sudo: yes
+
+- name: Restart VNC Service
+  service: name=x11vnc enabled=yes
+- service: name=x11vnc state=restarted
+
+- name: Go to GUI mode
+  shell: init 5
+  sudo: yes
