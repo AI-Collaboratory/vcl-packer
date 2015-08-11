@@ -10,7 +10,8 @@
       "tags": {
         "OS_Version": "Ubuntu",
         "Release": "Vivid 15.04",
-        "VNC_Shared": "yes"
+        "VNC_Shared": "yes",
+        "RDP_Shared": "yes"
       }
     }
   ],

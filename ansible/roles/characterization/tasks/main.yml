@@ -1,0 +1,23 @@
+---
+- name: Install Java Package
+  apt: pkg={{ item }} state=installed update_cache=true
+  with_items:
+    - openjdk-8-jdk
+
+- name: Download FITS
+  get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.6_1.zip dest=/tmp
+
+- name: Unzip FITS
+  unarchive: src=/tmp/fits-0.8.6_1.zip dest=/home/dcic copy=no
+
+- name: Copy FITS script into profile.d
+  template: src=fits.j2 dest=/etc/profile.d/fits
+
+- name: Add Siegfried package signing key
+  apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=bintray state=present
+
+- name: Add Siegfried APT repository
+  apt_repository: repo='deb http://dl.bintray.com/siegfried/debian wheezy main' state=present
+
+- name: Install Siegfried package
+  apt: name=siegfried update_cache=yes

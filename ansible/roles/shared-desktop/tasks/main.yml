@@ -3,6 +3,7 @@
   apt: pkg={{ item }} state=installed update_cache=true
   with_items:
     - x11vnc
+    - xrdp
 
 - name: Drop Gnome required encryption for remote access
   shell: gsettings set org.gnome.Vino require-encryption false
@@ -10,6 +11,9 @@
 
 - name: Copy the X11VNC service file
   template: src=x11vnc.service.j2 dest=/lib/systemd/system/x11vnc.service
+
+- name: Copy the XRDP INI file
+  template: src=xrdp.ini.j2 dest=/etc/xrdp/xrdp.ini
 
 #- file: path=/home/dcic/.vnc state=directory mode=0755 owner=dcic
 #- name: Copy the X startup file
@@ -23,9 +27,13 @@
   shell: systemctl daemon-reload
   sudo: yes
 
-- name: Restart VNC Service
+- name: Enable and Restart VNC Service
   service: name=x11vnc enabled=yes
 - service: name=x11vnc state=restarted
+
+- name: Enable and Restart VNC Service
+  service: name=xrdp enabled=yes
+- service: name=xrdp state=restarted
 
 - name: Go to GUI mode
   shell: init 5
