@@ -8,10 +8,10 @@
   get_url: url=http://projects.iq.harvard.edu/files/fits/files/fits-0.8.6_1.zip dest=/tmp
 
 - name: Unzip FITS
-  unarchive: src=/tmp/fits-0.8.6_1.zip dest=/home/dcic copy=no
+  unarchive: src=/tmp/fits-0.8.6_1.zip dest=/home/dcic copy=no owner=dcic group=dcic
 
 - name: Copy FITS script into profile.d
-  template: src=fits.j2 dest=/etc/profile.d/fits
+  copy: src=../files/fits dest=/etc/profile.d/fits
 
 - name: Add Siegfried package signing key
   apt_key: url=https://bintray.com/user/downloadSubjectPublicKey?username=bintray state=present
