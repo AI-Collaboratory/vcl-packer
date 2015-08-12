@@ -1,5 +1,5 @@
 ---
-- hosts: test
+- hosts: test2
   remote_user: ubuntu
   sudo: yes
   gather_facts: yes
@@ -7,4 +7,5 @@
   roles:
   - common
   - characterization
-#  - heritrix
+  - heritrix
+  - epadd

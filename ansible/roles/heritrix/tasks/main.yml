@@ -3,13 +3,13 @@
   get_url: url=http://builds.archive.org/maven2/org/archive/heritrix/heritrix/3.2.0/heritrix-3.2.0-dist.tar.gz dest=/tmp
 
 - name: Unzip Heritrix
-  unarchive: src=/tmp/heritrix-3.2.0-dist.tar.gz dest=/home/dcic/heritrix copy=no
+  unarchive: src=/tmp/heritrix-3.2.0-dist.tar.gz dest=/home/dcic copy=no
 
 - name: Copy heritrix script into profile.d
   template: src=heritrix.j2 dest=/etc/profile.d/heritrix
 
 - name: Make executable
-  acl: name=/home/dcic/heritrix/bin/heritrix entity=dcic etype=user permissions=rwx state=present
+  acl: name=/home/dcic/heritrix-3.2.0/bin/heritrix entity=dcic etype=user permissions=rwx state=present
 
 - name: Create launcher on DCIC desktop
-  copy: src=heritrix.desktop.j2 dest=/home/dcic/Desktop
+  template: src=heritrix.desktop.j2 dest=/home/dcic/Desktop

@@ -1,8 +1,3 @@
 ---
 - name: Download ePADD
   get_url: url=http://suif.stanford.edu/~hangal/epadd/working/epadd-standalone.jar dest=/home/dcic
-
-- name: Unzip FITS
-  unarchive: src=/tmp/fits-0.8.6_1.zip dest=/home/dcic copy=no
-
-# java -Xmx4g -jar epadd-standalone.jar
