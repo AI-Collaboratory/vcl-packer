@@ -1,0 +1,4 @@
+---
+datasets:
+  - { mount: '/mnt/enron', volume: 'vol-e4235205', device: '/dev/sdf' }
+fileserver_ip: ??

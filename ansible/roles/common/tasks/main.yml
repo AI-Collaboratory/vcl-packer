@@ -11,6 +11,9 @@
 - name: Create DCIC User
   user: name=dcic password={{ dcic_password_crypt }} comment="DCIC VCL User"
 
+- name: Create Desktop folder with proper permissions
+  file: path=/home/dcic/Desktop state=directory mode=0775
+
 - name: Install the VNC Package
   apt: pkg={{ item }} state=installed update_cache=true
   with_items:

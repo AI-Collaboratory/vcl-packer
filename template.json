@@ -3,10 +3,11 @@
     {
       "type": "amazon-ebs",
       "region": "us-east-1",
+      "availability_zone": "us-east-1b",
       "source_ami": "ami-7b6cb610",
       "instance_type": "t2.medium",
       "ssh_username": "ubuntu",
-      "ami_name": "VCL Base {{timestamp}}",
+      "ami_name": "VCL Ubuntu {{timestamp}}",
       "tags": {
         "OS_Version": "Ubuntu",
         "Release": "Vivid 15.04",
