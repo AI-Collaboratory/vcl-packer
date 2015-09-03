@@ -6,6 +6,3 @@
 
   roles:
   - common
-  - characterization
-  - heritrix
-  - epadd

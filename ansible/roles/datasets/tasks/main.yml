@@ -1,0 +1,12 @@
+- name: Install packages
+  apt: pkg={{ item }} state=installed update_cache=true
+  with_items:
+    - nfs-common
+
+- name: create dataset mount points
+  file: dest={{ item.mount }} directory=yes mode=0777
+  with_items: "{{ datasets }}"
+
+- name: add NFS volumes to fstab
+  lineinfile: dest=/etc/fstab line={{ fileserver_ip }}:{{ item.mount }} {{ item.mount }} nfs user,rsize=8192,wsize=8192,timeo=14,intr 0 0
+  with_items: "{{ datasets }}"

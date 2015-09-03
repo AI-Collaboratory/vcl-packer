@@ -3,4 +3,9 @@
   get_url: url=http://suif.stanford.edu/~hangal/epadd/working/epadd-standalone.jar dest=/home/dcic owner=dcic group=dcic
 
 - name: Create launcher on DCIC desktop
-  copy: src=../files/epadd.desktop dest=/home/dcic/Desktop owner=dcic group=dcic
+  copy: src=../files/ePADD.desktop dest=/home/dcic/Desktop owner=dcic group=dcic
+
+- name: Install readpst
+  apt: pkg={{ item }} state=installed update_cache=true
+  with_items:
+    - readpst

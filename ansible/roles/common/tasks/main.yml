@@ -8,8 +8,17 @@
 - name: Upgrade all packages
   apt: upgrade=dist update_cache=true
 
+- name: Create Desktop folder with proper permissions
+  file: path=/etc/lightdm/lightdm.conf.d state=directory mode=0644 owner=root group=root
+
+- name: Set DCIC autologin with Ubuntu session manager
+  copy: src=../files/50-dciclogin.conf dest=/etc/lightdm/lightdm.conf.d/50-dciclogin.conf mode=0644 owner=root group=root
+
 - name: Create DCIC User
   user: name=dcic password={{ dcic_password_crypt }} comment="DCIC VCL User"
+
+- name: Create Desktop folder with proper permissions
+  file: path=/home/dcic/Desktop state=directory mode=0775
 
 - name: Install the VNC Package
   apt: pkg={{ item }} state=installed update_cache=true
@@ -19,21 +28,18 @@
 
 - name: Drop Gnome required encryption for remote access
   shell: gsettings set org.gnome.Vino require-encryption false
-  sudo: yes
 
 - name: Copy the X11VNC service file
-  template: src=x11vnc.service.j2 dest=/lib/systemd/system/x11vnc.service
+  copy: src=../files/x11vnc.service dest=/lib/systemd/system/x11vnc.service owner=root group=root
 
 - name: Copy the XRDP INI file
-  template: src=xrdp.ini.j2 dest=/etc/xrdp/xrdp.ini
+  copy: src=../files/xrdp.ini dest=/etc/xrdp/xrdp.ini owner=root group=root
 
 - name: Store the VNC password
   shell: x11vnc -storepasswd {{ dcic_password }} /etc/dcic_x11vnc_passwd
-  sudo: yes
 
 - name: Add the new service to systemd daemon
   shell: systemctl daemon-reload
-  sudo: yes
 
 - name: Enable and Restart VNC Service
   service: name=x11vnc enabled=yes
@@ -45,4 +51,6 @@
 
 - name: Go to GUI mode
   shell: init 5
-  sudo: yes
+
+- name: Wait for 30 seconds
+  shell: sleep 30
