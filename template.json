@@ -20,17 +20,17 @@
     {
     "type": "shell",
     "inline": [
-      "sudo apt-get update",
-      "sudo apt-get -y upgrade",
-      "sudo apt-get install -y ansible"]
+      "sudo apt-get -qy update",
+      "sudo apt-get -qy upgrade",
+      "sudo apt-get -qy install ansible"]
     },
     {
       "type": "ansible-local",
       "playbook_file": "ansible/site.yml",
       "playbook_dir": "ansible",
-      "group_vars": "/home/jansen/Dropbox/UMD-DCIC/Amazon/group_vars",
+      "group_vars": "/home/jansen/Dropbox/ansible/group_vars",
       "inventory_groups": "vcl",
-      "inventory_file": "/home/jansen/Dropbox/UMD-DCIC/Amazon/hosts"
+      "inventory_file": "/home/jansen/Dropbox/ansible/hosts"
     }
   ]
 }

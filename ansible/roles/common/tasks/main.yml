@@ -3,16 +3,16 @@
   apt: pkg={{ item }} state=installed update_cache=true
   with_items:
     - ubuntu-desktop
-    - gnome-core
+    # - gnome-core
 
 - name: Upgrade all packages
   apt: upgrade=dist update_cache=true
 
-- name: Create Desktop folder with proper permissions
-  file: path=/etc/lightdm/lightdm.conf.d state=directory mode=0644 owner=root group=root
-
-- name: Set DCIC autologin with Ubuntu session manager
-  copy: src=../files/50-dciclogin.conf dest=/etc/lightdm/lightdm.conf.d/50-dciclogin.conf mode=0644 owner=root group=root
+# - name: Create Desktop folder with proper permissions
+#   file: path=/etc/lightdm/lightdm.conf.d state=directory mode=0644 owner=root group=root
+#
+# - name: Set DCIC autologin with Ubuntu session manager
+#   copy: src=../files/50-dciclogin.conf dest=/etc/lightdm/lightdm.conf.d/50-dciclogin.conf mode=0644 owner=root group=root
 
 - name: Create DCIC User
   user: name=dcic password={{ dcic_password_crypt }} comment="DCIC VCL User"
